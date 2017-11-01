@@ -39,9 +39,9 @@ var frontendAssets = 'frontend/views/assets';
 var backendAssets = 'backend/views/assets';
 
 var frontendWeb = 'frontend/web';
-var backendCss = 'backend/web/css';
+var backendWeb = 'backend/web';
 
-gulp.task('styles:prepare', function() {
+gulp.task('styles:frontend', function() {
   return  gulp.src([
       frontendAssets + '/less/*.less',
 	'!' + frontendAssets + '/less/smart-grid.less'
@@ -50,25 +50,45 @@ gulp.task('styles:prepare', function() {
         ],{base: frontendAssets + '/less'})
     .pipe(plumber({errorHandler:notify.onError(function(error){
             return {
-                title: "Styles compress",
+                title: "Styles frontend compress",
                 message:error.message
             };
     })}))
-  //  .pipe(newer({dest:'design/new',ext:'.min.css'}))    
-  //  .pipe(sourcemaps.init())
-  //  .pipe(rename({suffix: '.min'}))
+
     .pipe(less())
     .pipe(gcmq())
     .pipe(autoprefixer({
           browsers: ['> 0.1%'],
           cascade: false
       }))
-  //  .pipe(cleanCSS({level: 2}))
-    //.pipe(cssnano())
-    
-   // .pipe(sourcemaps.write('.'))
+
     .pipe(gulp.dest(frontendWeb + '/css'))
     .pipe(notify({ message: 'Css file <%= file.relative %> handled' }));
+});
+
+gulp.task('styles:backend', function() {
+    return  gulp.src([
+        backendAssets + '/less/*.less',
+
+
+
+    ],{base: backendAssets + '/less'})
+        .pipe(plumber({errorHandler:notify.onError(function(error){
+            return {
+                title: "Styles backend compress",
+                message:error.message
+            };
+        })}))
+
+        .pipe(less())
+        .pipe(gcmq())
+        .pipe(autoprefixer({
+            browsers: ['> 0.1%'],
+            cascade: false
+        }))
+
+        .pipe(gulp.dest(backendWeb + '/css'))
+        .pipe(notify({ message: 'Css file <%= file.relative %> handled' }));
 });
 
 
@@ -77,7 +97,8 @@ gulp.task('styles:prepare', function() {
  */
 
 gulp.task('watch',function(){
-  gulp.watch(frontendAssets +'/less/*.less',gulp.series('styles:prepare'));
+    gulp.watch(frontendAssets +'/less/*.less',gulp.series('styles:frontend'));
+    gulp.watch(backendAssets +'/less/*.less',gulp.series('styles:backend'));
   
 });
 
@@ -89,7 +110,8 @@ gulp.task('serve',function(){
         backend +'/**/*.php',
         frontendWeb + '/css/*.css',
         frontendWeb + '/js/*.js',
-                       
+        backendWeb + '/css/*.css',
+        backendWeb + '/js/*.js',
 
                        ])
             .on('change',browserSync.reload);
@@ -100,9 +122,9 @@ gulp.task('serve',function(){
 gulp.task('bs:init',function () {
   return browserSync.init({
         open: 'external',
-        host: 'multiglot.dev',
+        host: 'backend.multiglot.dev',
         proxy: {
-            target: "multiglot.dev",
+            target: "backend.multiglot.dev",
         },
         port: 81
     });
