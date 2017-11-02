@@ -65,6 +65,7 @@ class Book extends \yii\db\ActiveRecord
         return date('d.m.Y h:i:s',strtotime($this->date_at));
     }/**/
 
+
     public function getAuthorName(){
         if($this->author){
             return $this->author->name;

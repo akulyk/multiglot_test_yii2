@@ -29,7 +29,7 @@ class SeederController extends Controller
             $author = $this->addAuthor();
             $author->save();
             $book = $this->addBook();
-            $this->service->add($book,$author);
+            $this->service->addFromSeed($book,$author);
 
             $this->stdout("User - " . $user->email . ' created!'.PHP_EOL);
             $this->stdout("Author - " . $author->name . ' created!'.PHP_EOL);

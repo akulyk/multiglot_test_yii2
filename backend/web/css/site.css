@@ -194,7 +194,8 @@ a.desc:after {
   list-style-image: url("../images/p-arrow.png");
 }
 
-.field-book-date_at {
+.field-book-date_at,
+.field-bookform-date_at {
   position: relative;
 }
 

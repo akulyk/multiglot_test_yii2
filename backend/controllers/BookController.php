@@ -8,12 +8,27 @@ use application\entities\Author\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use application\forms\book\BookForm;
+use application\repositories\BookRepository;
+use application\services\BookManageService;
 
 /**
  * BookController implements the CRUD actions for Book model.
  */
 class BookController extends Controller
 {
+    protected $bookRepository;
+    protected $service;
+
+    public function __construct($id, $module,
+                                BookRepository $bookRepository,
+                                BookManageService $bookManageService,
+                                $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->bookRepository = $bookRepository;
+        $this->service = $bookManageService;
+    }
     /**
      * @inheritdoc
      */
@@ -52,7 +67,7 @@ class BookController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findBook($id),
         ]);
     }
 
@@ -82,14 +97,18 @@ class BookController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $book = $this->findBook($id);
+        $form = new BookForm($book);
 
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->service->update($form, $book);
+            Yii::$app->session->setFlash('success', "Книга успешно обновлена");
+            return $this->redirect(['view', 'id' => $book->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $form,
+                'book' => $book,
             ]);
         }
     }
@@ -114,12 +133,12 @@ class BookController extends Controller
      * @return Book the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
-        if (($model = Book::findOne($id)) !== null) {
-            return $model;
+    protected function findBook($id){
+
+        if (($book = $this->bookRepository->get($id)) !== null) {
+            return $book;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Запрашиваемый автор не найден.');
         }
-    }
+    }/**/
 }

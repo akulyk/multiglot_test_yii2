@@ -156,7 +156,7 @@ class AuthorController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->findAuthor($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -169,4 +169,4 @@ class AuthorController extends Controller
             throw new NotFoundHttpException('Запрашиваемый автор не найден.');
         }
     }/**/
-}
+}/* end of Controller */

@@ -49,7 +49,7 @@ $url = \yii\helpers\Url::to(['author/get-list']);
             'value'=>$model->dateFormatted]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($book->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $book->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
