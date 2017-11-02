@@ -48,12 +48,11 @@ AppAsset::register($this);
       //  $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems = [
-            ['label' => 'Главная', 'url' => ['/site/index']],
-        ];
-        $menuItems = [
-            ['label' => 'Авторы', 'url' => ['/author/index']],
-            ['label' => 'Книги', 'url' => ['/book/index']],
-        ];
+                ['label' => 'Front', 'url' => Yii::$app->frontendUrlManager->createAbsoluteUrl(['/'])]
+            ];
+        $menuItems[] =  ['label' => 'Главная', 'url' => ['/site/index']];
+        $menuItems[] =  ['label' => 'Авторы', 'url' => ['/author/index']];
+        $menuItems[] =  ['label' => 'Книги', 'url' => ['/book/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

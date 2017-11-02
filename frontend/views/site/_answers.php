@@ -4,11 +4,10 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Общие вопросы';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <div class="q-item">
         <div class="question">
             <p>1. Есть массив: <code>$a = array(‘ a b c ’, ‘ abc ’, ‘e dw’);</code>

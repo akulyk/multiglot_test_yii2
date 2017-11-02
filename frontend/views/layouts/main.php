@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'MultiGlot',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -37,16 +37,17 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
-        ['label' => 'Общие вопросы', 'url' => ['/site/answers']],
+     //   ['label' => 'Общие вопросы', 'url' => ['/site/answers']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
+
+        $menuItems[] = ['label' => 'Вход', 'url' => Yii::$app->backendUrlManager->createAbsoluteUrl(['/site/login'])];
     } else {
+        $menuItems[] = ['label' => 'Админ', 'url' => Yii::$app->backendUrlManager->createAbsoluteUrl(['/'])];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Выход (' . Yii::$app->user->identity->username . ')',
+                'Выход (' . Yii::$app->user->identity->email . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
