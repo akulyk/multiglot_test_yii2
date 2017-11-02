@@ -15,6 +15,8 @@ class DateTimepickerAsset extends AssetBundle
         'js/datetimepicker/css/bootstrap-datetimepicker.min.css',
     ];
     public $js = [
+        'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js',
+      //  'https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/js/bootstrap-datetimepicker.min.js',
         'js/datetimepicker/js/bootstrap-datetimepicker.min.js',
         'js/datetimepicker/js/bdt_init.js'
     ];

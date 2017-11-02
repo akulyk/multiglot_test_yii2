@@ -37,9 +37,9 @@ AppAsset::register($this);
         ],
     ]);
     ?>
-        <div id="top-bar-logo">
+        <div id="top-bar-logo" class="<?=!Yii::$app->user->isGuest ? "absolute":"";?>">
         <?php
-            echo Html::img(Url::to('images/logo.png'));
+            echo Html::img(Url::to('/images/logo.png'));
         ?>
         </div>
     <?php
@@ -48,12 +48,16 @@ AppAsset::register($this);
       //  $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems = [
-            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Главная', 'url' => ['/site/index']],
+        ];
+        $menuItems = [
+            ['label' => 'Авторы', 'url' => ['/author/index']],
+            ['label' => 'Книги', 'url' => ['/book/index']],
         ];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->email . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
